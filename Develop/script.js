@@ -32,6 +32,9 @@ function generatePassword() {
     // Confirm Lower Case
     passwordParam.includeLower = confirm("Would you like your password to contain lowercase letters?");
     
+    // Confirm Upper Case
+    passwordParam.includeUpper = confirm("Would you like your password to contain uppercase letters?");
+
     // Map over alphabet array using length as limit
     for (let i = 0; i < passwordParam.length; i++) {
 
@@ -51,7 +54,10 @@ function generatePassword() {
   newPassword = newPassword.toString().replace(/,/g, "");
   if (passwordParam.includeLower && !passwordParam.includeUpper) {
     return newPassword.toLowerCase();
-  } 
+
+  } else if (!passwordParam.includeLower && passwordParam.includeUpper) {
+    return newPassword.toUpperCase();
+  }
 }
 
 
