@@ -3,13 +3,12 @@
 // Set up array of alphabet
 const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
-// Initialize empty newPassword array and characterLength
+// Initialize empty newPassword array and passwordParam
 let newPassword = [];
-let characterLength = ""
 
 let passwordParam = {
-  length: 8,
-  includeLower: false,
+  length: "",
+  includeLower: true,
   includeUpper: false,
   includeNum: false,
   includeSpecial: false
@@ -18,18 +17,23 @@ let passwordParam = {
 // Generate Password
 function generatePassword() {
 
-  // Reset newPassword array and characterLength
+  // Reset newPassword array and passwordParam
   newPassword = [];
-  characterLength = ""
+  passwordParam.length = "";
+  passwordParam.includeLower = true;
+  passwordParam.includeUpper = false;
 
   // Specify character length of password
-  characterLength = prompt("Enter how many characters you would like your password to be. Length must be between 8 and 128 characters.")
+  passwordParam.length = prompt("Enter how many characters you would like your password to be. Length must be between 8 and 128 characters.")
 
   // Check if prompt value is a number between 8 and 128
-  if (parseInt(characterLength) >= 8 && parseInt(characterLength) <= 128) {
+  if (parseInt(passwordParam.length) >= 8 && parseInt(passwordParam.length) <= 128) {
+
+    // Confirm Lower Case
+    passwordParam.includeLower = confirm("Would you like your password to contain lowercase letters?");
     
-    // Map over alphabet array using characterLength as limit
-    for (let i = 0; i < characterLength; i++) {
+    // Map over alphabet array using length as limit
+    for (let i = 0; i < passwordParam.length; i++) {
 
       // Pushes random letter from alphabet array to newPassword array with each loop
       let letter = Math.floor(Math.random() * 27);
@@ -44,7 +48,10 @@ function generatePassword() {
   };
 
   // newPassword is converted to string and commas are removed, then value returned
-  return newPassword.toString().replace(/,/g, "");
+  newPassword = newPassword.toString().replace(/,/g, "");
+  if (passwordParam.includeLower && !passwordParam.includeUpper) {
+    return newPassword.toLowerCase();
+  } 
 }
 
 
