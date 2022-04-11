@@ -43,12 +43,26 @@ function mapAlphabet(array) {
   return array;
 }
 
+// Map over number array using length as limit
 function mapNumber(array) {
   for (let i = 0; i < passwordParam.length; i++) {
     let num = Math.floor(Math.random() * 10);
     array.push(numbers[num]);
   }
   return array;
+}
+
+function alphNum(array) {
+  for (let i = 0; i < passwordParam.length; i++) {
+    if (Math.random() < 0.5) {
+      let letter = Math.floor(Math.random() * 26);
+      array.push(alphabet[letter]);
+    } else {
+      let num = Math.floor(Math.random() * 10);
+      array.push(numbers[num]);
+    }
+  }
+  return array
 }
 
 // Generate Password
@@ -85,18 +99,23 @@ function generatePassword() {
 
   // newPassword is converted to string and commas are removed, string is then adjusted for case
 
-  // Upper and Lower Case
-  if (passwordParam.includeLower && passwordParam.includeUpper) {
+  // Upper and Lower Case, no Numbers
+  if (passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum) {
     newPassword = stringifyPassword(mixedCase(mapAlphabet(newPassword)));
     return newPassword;
 
   // Lower Case Only
-  } else if (passwordParam.includeLower && !passwordParam.includeUpper) {
+  } else if (passwordParam.includeLower && !passwordParam.includeUpper && !passwordParam.includeNum) {
     newPassword = stringifyPassword(mapAlphabet(newPassword));
     return newPassword.toLowerCase();
 
+  // Lower Case and Numbers
+  } else if (passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum) {
+    newPassword = stringifyPassword(alphNum(newPassword));
+    return newPassword;
+  
   // Upper Case Only
-  } else if (!passwordParam.includeLower && passwordParam.includeUpper) {
+  } else if (!passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum) {
     newPassword = stringifyPassword(mapAlphabet(newPassword));
     return newPassword.toUpperCase();
 
@@ -104,10 +123,8 @@ function generatePassword() {
   } else if (!passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum) {
     newPassword = stringifyPassword(mapNumber(newPassword));
     return newPassword;
-  }
-  
-
-  
+    
+  }  
 }
 
 
