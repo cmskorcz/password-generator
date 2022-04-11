@@ -14,6 +14,23 @@ let passwordParam = {
   includeSpecial: false
 };
 
+// Turns array into string, removing commas
+function stringifyPassword(pass) {
+  return pass.toString().replace(/,/g, "");
+}
+
+// Maps over array and then randomly assigns the letter with either upper or lower case. Returns a new array containing variations.
+function mixedCase(pass) {
+  let mixedArray = pass.map((letter) => {
+    if (Math.random() > 0.5) {
+      return letter.toUpperCase();
+    } else {
+      return letter.toLowerCase();
+    }
+  });
+  return mixedArray;
+}
+
 // Generate Password
 function generatePassword() {
 
@@ -39,7 +56,7 @@ function generatePassword() {
     for (let i = 0; i < passwordParam.length; i++) {
 
       // Pushes random letter from alphabet array to newPassword array with each loop
-      let letter = Math.floor(Math.random() * 27);
+      let letter = Math.floor(Math.random() * 26);
       newPassword.push(alphabet[letter]);
     };
 
@@ -50,12 +67,21 @@ function generatePassword() {
     generatePassword();
   };
 
-  // newPassword is converted to string and commas are removed, then value returned
-  newPassword = newPassword.toString().replace(/,/g, "");
-  if (passwordParam.includeLower && !passwordParam.includeUpper) {
+  // newPassword is converted to string and commas are removed, string is then adjusted for case
+
+  // Both Upper and Lower Case
+  if (passwordParam.includeLower && passwordParam.includeUpper) {
+    newPassword = stringifyPassword(mixedCase(newPassword));
+    return newPassword;
+
+  // Lower Case Only
+  } else if (passwordParam.includeLower && !passwordParam.includeUpper) {
+    newPassword = stringifyPassword(newPassword);
     return newPassword.toLowerCase();
 
+  // Upper Case Only
   } else if (!passwordParam.includeLower && passwordParam.includeUpper) {
+    newPassword = stringifyPassword(newPassword);
     return newPassword.toUpperCase();
   }
 }
