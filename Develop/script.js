@@ -156,7 +156,7 @@ function generatePassword() {
 
   };
 
-  // newPassword is converted to string and commas are removed, string is then adjusted for case
+  // newPassword is generated per specified parameters and converted into a string
 
   // Lower Case Only
   if (passwordParam.includeLower && !passwordParam.includeUpper && !passwordParam.includeNum && !passwordParam.includeSpecial) {
