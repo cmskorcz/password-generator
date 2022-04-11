@@ -152,7 +152,7 @@ function generatePassword() {
   } else {
     // If valid num not entered, alert user and restart function
     alert("Please enter a valid length")
-    generatePassword();
+    return generatePassword();
 
   };
 
@@ -236,7 +236,7 @@ function generatePassword() {
   // No option picked, restart generatePassword()
   } else {
     alert("You must select at least one parameter to be included in your password.");
-    generatePassword();
+    return generatePassword();
   }
 };
 
