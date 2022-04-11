@@ -172,6 +172,10 @@ function generatePassword() {
     newPassword = stringifyPassword(symAlpha(newPassword));
     return newPassword.toLowerCase();
 
+  // Symbols and Upper
+  } else if (!passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum && passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(symAlpha(newPassword));
+    return newPassword.toUpperCase();
   }
 }
 
