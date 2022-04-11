@@ -22,7 +22,6 @@ function stringifyPassword(pass) {
 
 // Maps over array and then randomly assigns the letter with either upper or lower case. Returns a new array containing variations.
 function mixedCase(array) {
-  debugger;
   let mixedArray = array.map((letter) => {
     if (Math.random() > 0.5) {
       return letter.toString().toUpperCase();
@@ -53,6 +52,7 @@ function mapNumber(array) {
   return array;
 }
 
+// Map randomly over number and alphabet array
 function alphNum(array) {
   for (let i = 0; i < passwordParam.length; i++) {
     if (Math.random() < 0.5) {
