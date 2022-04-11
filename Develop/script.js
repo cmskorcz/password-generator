@@ -158,34 +158,14 @@ function generatePassword() {
 
   // newPassword is converted to string and commas are removed, string is then adjusted for case
 
-  // Upper, Lower, and Numbers
-  if (passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum && !passwordParam.includeSpecial) {
-    newPassword = stringifyPassword(mixedCase(alphNum(newPassword)));
-    return newPassword;
-  
-  // Upper and Lower Case
-  } else if (passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum && !passwordParam.includeSpecial) {
-    newPassword = stringifyPassword(mixedCase(mapAlphabet(newPassword)));
-    return newPassword;
-
   // Lower Case Only
-  } else if (passwordParam.includeLower && !passwordParam.includeUpper && !passwordParam.includeNum && !passwordParam.includeSpecial) {
+  if (passwordParam.includeLower && !passwordParam.includeUpper && !passwordParam.includeNum && !passwordParam.includeSpecial) {
     newPassword = stringifyPassword(mapAlphabet(newPassword));
-    return newPassword.toLowerCase();
-
-  // Lower Case and Numbers
-  } else if (passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum && !passwordParam.includeSpecial) {
-    newPassword = stringifyPassword(alphNum(newPassword));
     return newPassword.toLowerCase();
   
   // Upper Case Only
   } else if (!passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum && !passwordParam.includeSpecial) {
     newPassword = stringifyPassword(mapAlphabet(newPassword));
-    return newPassword.toUpperCase();
-  
-  // Upper Case and Numbers
-  } else if (!passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum && !passwordParam.includeSpecial) {
-    newPassword = stringifyPassword(alphNum(newPassword));
     return newPassword.toUpperCase();
   
   // Numbers Only
@@ -197,37 +177,68 @@ function generatePassword() {
   } else if (!passwordParam.includeLower && !passwordParam.includeUpper && !passwordParam.includeNum && passwordParam.includeSpecial) {
     newPassword = stringifyPassword(mapSymbol(newPassword));
     return newPassword;
+  
+  // Lower and Upper Case
+  } else if (passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum && !passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(mixedCase(mapAlphabet(newPassword)));
+    return newPassword;
 
-  // Symbols and Lower
+  // Lower and Numbers
+  } else if (passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum && !passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(alphNum(newPassword));
+    return newPassword.toLowerCase();
+  
+  // Lower and Symbols
   } else if (passwordParam.includeLower && !passwordParam.includeUpper && !passwordParam.includeNum && passwordParam.includeSpecial) {
     newPassword = stringifyPassword(symAlpha(newPassword));
     return newPassword.toLowerCase();
 
-  // Symbols and Upper
+  // Upper and Numbers
+  } else if (!passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum && !passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(alphNum(newPassword));
+    return newPassword.toUpperCase();
+
+  // Upper and Symbols
   } else if (!passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum && passwordParam.includeSpecial) {
     newPassword = stringifyPassword(symAlpha(newPassword));
     return newPassword.toUpperCase();
 
-  // Symbols, Upper, and Lower
+  // Numbers and Symbols
+  } else if (!passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum && passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(symNum(newPassword));
+    return newPassword;
+  
+  // Lower, Upper, Numbers
+  } else if (passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum && !passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(mixedCase(alphNum(newPassword)));
+    return newPassword;
+  
+  // Lower, Upper, Symbols
   } else if (passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum && passwordParam.includeSpecial) {
     newPassword = stringifyPassword(mixedCase(symAlpha(newPassword)));
     return newPassword;
 
-  // Symbols and Numbers
-  } else if (!passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum && passwordParam.includeSpecial) {
-    newPassword = stringifyPassword(symNum(newPassword));
-    return newPassword;
-
-  // Symbols, Lower, Number
-
-  // Symbols, Upper, Number
+  // Lower, Number, Symbols
+  } else if (passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum && passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(allChars(newPassword));
+    return newPassword.toLowerCase();
+  
+  // Upper, Number, Symbols
+  } else if (!passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum && passwordParam.includeSpecial) {
+    newPassword = stringifyPassword(allChars(newPassword));
+    return newPassword.toUpperCase();
 
   // Symbols, Upper, Lower, Numbers
   } else if (passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum && passwordParam.includeSpecial) {
     newPassword = stringifyPassword(mixedCase(allChars(newPassword)));
     return newPassword;
+
+  // No option picked, restart generatePassword()
+  } else {
+    alert("You must select at least one parameter to be included in your password.");
+    generatePassword();
   }
-}
+};
 
 
 
