@@ -21,12 +21,13 @@ function stringifyPassword(pass) {
 }
 
 // Maps over array and then randomly assigns the letter with either upper or lower case. Returns a new array containing variations.
-function mixedCase(pass) {
-  let mixedArray = pass.map((letter) => {
+function mixedCase(array) {
+  debugger;
+  let mixedArray = array.map((letter) => {
     if (Math.random() > 0.5) {
-      return letter.toUpperCase();
+      return letter.toString().toUpperCase();
     } else {
-      return letter.toLowerCase();
+      return letter.toString().toLowerCase();
     }
   });
   return mixedArray;
@@ -99,8 +100,13 @@ function generatePassword() {
 
   // newPassword is converted to string and commas are removed, string is then adjusted for case
 
+  // Upper, Lower, and Numbers
+  if (passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum) {
+    newPassword = stringifyPassword(mixedCase(alphNum(newPassword)));
+    return newPassword;
+  
   // Upper and Lower Case, no Numbers
-  if (passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum) {
+  } else if (passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum) {
     newPassword = stringifyPassword(mixedCase(mapAlphabet(newPassword)));
     return newPassword;
 
@@ -112,18 +118,23 @@ function generatePassword() {
   // Lower Case and Numbers
   } else if (passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum) {
     newPassword = stringifyPassword(alphNum(newPassword));
-    return newPassword;
+    return newPassword.toLowerCase();
   
   // Upper Case Only
   } else if (!passwordParam.includeLower && passwordParam.includeUpper && !passwordParam.includeNum) {
     newPassword = stringifyPassword(mapAlphabet(newPassword));
     return newPassword.toUpperCase();
-
+  
+  // Upper Case and Numbers
+  } else if (!passwordParam.includeLower && passwordParam.includeUpper && passwordParam.includeNum) {
+    newPassword = stringifyPassword(alphNum(newPassword));
+    return newPassword.toUpperCase();
+  
   // Numbers Only
   } else if (!passwordParam.includeLower && !passwordParam.includeUpper && passwordParam.includeNum) {
     newPassword = stringifyPassword(mapNumber(newPassword));
     return newPassword;
-    
+
   }  
 }
 
