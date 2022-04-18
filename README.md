@@ -37,3 +37,6 @@ The value of `newPassword` after being returned from `stringifyPassword()` then 
 The value of the `newPassword` array, after being mapped from the specified character arrays, is then passed to the `mixedCase()` function. This function maps over the `newPassword` array with a for-loop with `newPassword.length` as the terminator. For each pass of the loop, an if/else conditional is used to determine if the letter should be lower or upper case using `Math.random() > 0.5`. The resulting character is first converted into a string via `.toString()`. This is done in case the indexed character is a number or special character. The methods `.toLowerCase()` or `to.UpperCase()` are then called on the resulting string depending on the result of `Math.random`. Because any number or special character was made into a string prior, the character will remain unchanged and pass through without issue. Because `mixedCase()` returns an array of strings, it must still be passed to `stringifyPassword()` afterwords in order to convert the `newPassword`.
 
 ## Deployed Project
+Deployed Site Link: [Password Generator](https://cmskorcz.github.io/password-generator/)
+
+![Screenshot of Password Generator Site](./assets/images/screenshot.png)
